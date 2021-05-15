@@ -5,7 +5,6 @@ MongoDB是一个面向文档的免费数据库，多用于数据采集和分散�
 ## 数据库引擎排名
 https://db-engines.com/en/ranking
 
-## 知识点
 - 面向关系的数据库
     - Oracle
     - SQLServer
@@ -16,7 +15,7 @@ https://db-engines.com/en/ranking
     - Redis
 
 ## 官方网站
-- 官网：https://www.mongodb.com/
+https://www.mongodb.com/
 
 ## 技术准备
 JavaScript语言基础
