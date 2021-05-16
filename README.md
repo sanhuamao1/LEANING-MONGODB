@@ -1,4 +1,3 @@
-
 # 引言
 MongoDB笔记。教程源于小马技术：
 - 视频：https://www.youtube.com/watch?v=kmOzFqxcjEA&list=PLliocbKHJNwvYvA3paPKUg86qLKrwuNsd
@@ -7,197 +6,247 @@ MongoDB笔记。教程源于小马技术：
 
 该文章用于mongodb学习笔记整理。
 
-# 目录说明
-1. 什么是MongoDB
-2. MongoDB安装
-3. MongoDB基本概念
-4. 基本操作
-5. 操作集合(Collections)
-6. 操作文档(Document)
-7. 单个条件抽文档
-8. 复杂条件抽文档
-9. 抽出指定字段
-10. 文档的方法
-11. 文档更新
-12. 操作文档的函数
-13. 文档的特殊更新
-14. 使用索引  
 
-
-# 整理
+# 思维导图
 
 ![gc6RNd.png](https://z3.ax1x.com/2021/05/16/gc6RNd.png)
 
 - 完整脑图：https://share.mubu.com/doc/7jeYw7aHAG
-- 仓库：https://github.com/sanhuamao1/LEARN-MONGODB
-（在原来的基础上小改并添加了一些注释）
+- 仓库：https://github.com/sanhuamao1/LEARN-MONGODB（在原来的基础上小改并添加了一些注释）
 
-# 内容汇总
-## 01 什么是MongoDB
-MongoDB是一个面向文档的免费数据库，多用于数据采集和分散处理（Map/Reduce），特别是在大数据处理方面比较擅长。
+下面内容结合了官方文档与菜鸟教程的内容：
 
-### 数据库分类
-- 面向关系的数据库
-    - Oracle
-    - SQLServer
-    - MySql
-    - PostgreSql
-- NoSql
-    - MongoDB
-    - Redis
+# 一 什么是MongoDB
 
-## 02 MongoDB安装
+MongoDB是一个**面向文档**（NoSql）的免费数据库，多用于数据采集和分散处理（Map/Reduce），特别是在大数据处理方面比较擅长。
+
+- 数据库（Database）
+- 集合（Collection）——相当于数据表（Table）
+- 文档（Document）——相当于记录（Record）
+
+# 二 MongoDB安装
 
 - 安装地址：https://www.mongodb.com/try/download/community
 - 视频教程：https://www.bilibili.com/video/BV1x541137MG
 
+# 三 基本命令
 
-## 03 基本概念
-
-### 与关系型数据库的区别
-- 文档型数据库（nosql）
-    - 数据库（Database）
-    - 集合（Collection）
-    - 文档（Document）
-- 关系型数据库
-    - 数据库（Database）
-    - 数据表（Table）
-    - 记录（Record）
-
-### 数据库使用步骤
-- 建立数据库（mypost）
-- 建立数据集合（Posts,Categories,Tags）
-- 建立数据（Post:{"id":"","title":""}）
-
-## 04 基本操作
-- mongo：进入mongo命令工具
-- help：查看可执行命令
-- show dbs：展示数据库
-- use [database_name]：创建或切换数据库
-- db.stats()：查看数据库状态
-- db.dropDatabase()：删除数据库
-- exit：退出
-
-## 05 操作集合(Collections)
-- db.createCollection("[collection_name]")：创建集合
-- show collections：展示集合
-- db.[collection_name].find()：切换集合并查看文档
-- db.[collection_name1].renameCollection("[collection_name2]")：集合重命名
-- db.[collection_name1].drop()：删除集合
-
-## 06 操作文档(Document)
-- db.[collection_name].insert() ——插入数据
-- db.[collection_name].find() ——切换集合并查看文档
-- db.[collection_name].count() ——查看文档数
-- db.[collection_name].remove({}) ——删除文档
-
-例子
 ```bash
+mongo	//进入mongo命令工具
+help	//查看可执行命令
+show dbs	//展示数据库
+use [database_name]	//创建或切换数据库
+db.stats()	//查看数据库状态
+db.dropDatabase()	//删除数据库
+exit	//退出mongo命令工具
+```
+
+**操作集合(Collections)**
+
+```bash
+db.createCollection("[collection_name]")	//创建集合
+show collections	//展示集合
+db.[collection_name].find()	//切换集合并查看文档
+db.[collection_name1].renameCollection("[collection_name2]")	//集合重命名
+db.[collection_name1].drop()	//删除集合
+```
+
+**操作文档(Document)**
+
+```bash
+db.[collection_name].insert({}) //插入数据
+db.[collection_name].find() 	//切换集合并查看文档
+db.[collection_name].count() 	//查看文档数
+db.[collection_name].remove({}) //删除文档
+
 > db.posts.insert({title:"怪物猎人世界评测","rank":2,"tag":"game"});
 ```
 
-## 07 单个条件抽文档
-- db.[collection_name].find({"":""})：find后面写筛选条件
-- db.[collection_name].distinct("field_name")：取指定字段所包含的属性值
+# 四 读取文档
 
----
-- $gte：>=
-- $gt：>
-- $lte：<=
-- $lt：<
-- $eq：=
-- &ne：!=
-- 正则表达式：/k/,/^k/
+## Find-查询文档
 
-例子
-```js
+**比较**
+
+```bash
+db.col.find({<key1>:<value>})//等于
+db.col.find({<key>:{$lt:<value>}})//小于
+db.col.find({<key>:{$lte:<value>}})//小于或等于
+db.col.find({<key>:{$gt:<value>}})//大于
+db.col.find({<key>:{$gte:<value>}})//大于或等于
+db.col.find({<key>:{$ne:<value>}})//不等于
+
 > db.posts.find({"tag": "game"});
-> db.posts.find({"rank": {$lt: 4}});         
-> db.posts.find({"title": /u/});
+> db.posts.find({"rank": {$lt: 4}});   
 ```
-## 08 复杂条件抽文档
-- db.[collection_name].find({"":"", "":""})：多个条件筛选
-- db.[collection_name].find({$or:[{...},{...}]})：与或非运算
-- db.[collection_name].find({"": {$in: [...]}})：在某个范围内
-- db.[collection_name].find({"": {$exists: true}})：某个文档存在
 
-例子
-```js
+**其他**
+
+```bash
+db.col.find({<key1>:<value>,<key2>:<value>})//与
+db.col.find({$or:[{<key1>:<value>},{<key2>:<value>}]})//或
+db.col.find({<key>:{<key>:<expression>}})	//正则表达式
+db.col.find({<key>:{$in: [<value1>,<value2>]}})	//在某个范围内
+db.col.find({<key>:{$exists: true}})	//存在某个字段的文档
+db.col.find({<key>:{$type:<type>}})	//根据数据类型查询
+
+> db.posts.find({"title": /u/});
 > db.posts.find({"title": /u/, "rank":{$gte:5} });
-> db.posts.find({$or: [{"title": /u/}, {"rank":{$gte:4}}] });
+> db.posts.find({$or: [{"title": /u/}, {"rank":{$gte:4}}]});
 > db.posts.find({"rank": {$in: [3,4]} });
 > db.posts.find({"istop": {$exists: true} });
+> db.orders.find({
+      name: "Lemony Snicket",
+      date: {
+        $gte: new Date(new Date().setHours(00, 00, 00)),
+        $lt: new Date(new Date().setHours(23, 59, 59)),
+      },
+    });
 ```
 
-## 09 抽出指定字段
-- db.[collection_name].find({}, {field1: true, field2: 1})：抽出field1和field2。这里1相当于true
+**抽取**
 
-例子
 ```bash
+db.col.find({}, {<key1>: true, <key2>: 1,<key3>:0}) //每条文档只选key1和key2显示,且不显示key3
+
 > db.posts.find({}, {title:true, rank:1});
 > db.posts.find({}, {title:true, rank:1, _id:0});
 ```
 
-## 10 文档的方法
-- sort()：按照某字段升序降序
-- limit()：取指定数目条数
-- skip()：跳过指定数目条数
+**方法**
 
-例子
 ```bash
+db.col.find().sort({<key>:<type>});	//以key升序或降序，type可以是1和-1
+db.col.find().limit(<num>);	//限制显示条数
+db.col.find().skip(<num>)	//跳过指定条数
+
 > db.posts.find({}, {_id:0}).sort({rank:1});
 > db.posts.find({}, {_id:0}).limit(3);
 > db.posts.find({}, {_id:0}).skip(3).limit(3);//分页
 ```
 
-## 11 文档更新
-- update(<filter>,<update>,<options>)
 
-- 官方文档：https://docs.mongodb.com/manual/tutorial/update-documents/
 
-例子
+## Aggregate-聚合
+
+### 前言-管道
+
+MongoDB的聚合管道是将MongoDB文档在一个管道处理完毕后将结果传递给下一个管道处理。
+
+- $project：修改输入文档的结构。可以用来重命名、增加或删除域，也可以用于创建计算结果以及嵌套文档。
+- $match：用于过滤数据，只输出符合条件的文档。$match使用MongoDB的标准查询操作。
+- $limit：用来限制MongoDB聚合管道返回的文档数。
+- $skip：在聚合管道中跳过指定数量的文档，并返回余下的文档。
+- $unwind：将文档中的某一个数组类型字段拆分成多条，每条包含数组中的一个值。
+- $group：将集合中的文档分组，可用于统计结果。
+- $sort：将输入文档排序后输出。
+- $geoNear：输出接近某一地理位置的有序文档。
+
+```bash
+> db.article.aggregate(
+    { $project : {
+        _id : 0 ,
+        title : 1 ,
+        author : 1
+    }});//文档只包含title和author字段，不包含_id字段
+```
+
+### 聚合操作
+
+```bash
+//计算总和
+db.col.aggregate([
+	{
+		$group : {
+			_id : <groupby-key>,
+        	<new-key> : {$sum : <key>}
+    	}
+    }
+])
+
+db.col.aggregate([{$group:{_id : <groupby-key>,<new-key>:{$avg:<key>}}}])//平均值
+db.col.aggregate([{$group:{_id : <groupby-key>,<new-key>:{$min:<key>}}}])//最小值
+db.col.aggregate([{$group:{_id : <groupby-key>,<new-key>:{$max:<key>}}}])//最大值
+db.col.aggregate([{$group:{_id : <groupby-key>,<new-key>:{$first:<key>}}}])//获取第一个文档数据
+db.col.aggregate([{$group : {_id : <groupby-key>,<new-key> : {$last:<key>}}}])//获取最后一个文档数据
+
+> db.orders.aggregate([
+  {
+    $match: {
+      date: {
+        $gte: new Date(new Date().getTime() - 1000 * 3600 * 24 * 7),
+        $lt: new Date(),
+      },
+    },
+  },
+  {
+    $group: {
+      _id: "$status",
+      count: {
+        $sum: 1,
+      },
+    },
+  },
+]);//先匹配一周之前的数据，在其基础上以status字段分组，创建一个字段count来合计每组的数量
+```
+
+# 五 更新文档
+
+- 官方文档：https://docs.mongodb.com/manual/reference/method/db.collection.update/
+
+- 语法：update(`<query>,<update>,<options>`)
+
+
 ```bash
 > db.posts.update({"title":"怪物猎人世界评测"}, {$set: {"rank": 10} });
 > db.posts.update({"tag":"it"}, {$set: {"rank": 60}}, {multi: true});
 ```
 
+## update
 
-## 12 操作文档的函数
-- $inc:递加
-- $mul:相乘
-- $rename:改名
-- $set:新增or修改
-- $unset:字段删除
+- $inc——递加
+- $mul——相乘
+- $rename——改名
+- $set——新增or修改
+- $unset——字段删除
 
-例子
 ```bash
 > db.posts.update({title:"怪物猎人世界评测"}, {$inc: {rank: 1}});
 > db.posts.update({title:"怪物猎人世界评测"}, {$rename: {"rank": "score"}});
-> db.posts.update({title:"怪物猎人世界评测"}, {$unset: {"istop": true}});
 ```
 
-## 13 文档的特殊更新
-- upsert:有则更新，无则追加
-- remove:条件删除数据
+## options
 
-例子
+- $upsert——有则更新，无则追加
+- $multi——是否开启多选
+
 ```bash
 > db.posts.update({title:"其实创造比大志好玩"}, {title:"其实创造比大志好玩", "rank":5,"tag":"game"}, {upsert:true});
-> db.posts.remove({title:"其实创造比大志好玩"});
+> db.posts.update({title:"怪物猎人世界评测"}, {$unset: {"istop": true}});
+
 ```
 
-## 14 使用索引
-- getIndexes()：列出当前集合的所有索引
-- createIndex({...}, {...})：建立一个索引
-- dropIndex({...})：删除一个索引
+# 六 使用索引
 
-例子
 ```bash
-> db.posts.getIndexes();
-> db.posts.createIndex({rank:-1});
-> db.posts.dropIndex({rank:-1});
+db.col.getIndexes();//列出当前集合的所有索引
+db.col.createIndex({<key>:<type>});//建立一个索引
+db.col.dropIndex({<key>:<type>});//删除一个索引
+
+> db.col.createIndex({rank:-1});
+> db.col.dropIndex({rank:-1});
 ```
 
-## 15 备份与恢复
+# 七 备份与恢复
+
 - mongodump：备份
 - mongorestore：恢复
+
+# 其他
+
+```bash
+db.col.distinct(<key>)	//取指定字段所包含的属性值(数组)
+db.col.remove(<query>);//根据条件删除数据
+
+>db.posts.remove({"title":"其实创造比大志好玩"})
+```
