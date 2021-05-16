@@ -3,7 +3,7 @@
 
 ## 知识点
 - mongodump：备份
-- mongorestore
+- mongorestore：恢复
 
 ## 实战演习
 ```bash
