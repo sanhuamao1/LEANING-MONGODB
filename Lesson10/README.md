@@ -18,5 +18,5 @@ $ mongo
 > db.posts.findOne({}, {_id:0});//只抽第一条，与limit(1)相似
 > db.posts.find({}, {_id:0});
 > db.posts.find({}, {_id:0}).limit(3);
-> db.posts.find({}, {_id:0}).skip(3).limit(3);//跳过前三条，从第四条开始（汾分页）
+> db.posts.find({}, {_id:0}).skip(3).limit(3);//跳过前三条，从第四条开始（分页）
 ```
