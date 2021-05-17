@@ -228,16 +228,66 @@ db.col.aggregate([{$group : {_id : <groupby-key>,<new-key> : {$last:<key>}}}])//
 
 # 六 使用索引
 
+使用索引可提高查询速度
+
 ```bash
 db.col.getIndexes();//列出当前集合的所有索引
 db.col.createIndex({<key>:<type>});//建立一个索引
+db.col.createIndex({<key>:<type>,<key>:<type>});//建立复合索引（当查询需要用到多个key时）
+db.col.createIndex({<key>:<type>,"unique":true});//唯一索引（key对应的value值不允许重复）
 db.col.dropIndex({<key>:<type>});//删除一个索引
 
 > db.col.createIndex({rank:-1});
 > db.col.dropIndex({rank:-1});
 ```
 
-# 七 备份与恢复
+
+
+# 七 权限管理
+
+## 创建角色
+
+先切换到数据库，再创建角色。role是角色类型，db指定数据库
+
+```bash
+> use admin
+> db.createUser({
+	user:"admin",
+	pwd:"123456",
+	roles:[{role:'root',db:admin}]
+});
+```
+
+## 配置文件
+
+`/bin/mongod.cfg`
+
+```
+security:authorization enabled
+```
+
+> 配置完文件前需重启mongoserver才生效
+
+## 连接
+
+```bash
+mongo admin -u admin -p 123456
+//or
+mongo admin
+db.auth("admin","123456")
+```
+
+## 其他
+
+```bash
+show users //展示角色
+db.dropUser(<user_name>)//删除角色
+updateUser(<user_name>,{pwd:<pwd>})//更改密码
+```
+
+
+
+# 八 备份与恢复
 
 - mongodump：备份
 - mongorestore：恢复
@@ -250,3 +300,4 @@ db.col.remove(<query>);//根据条件删除数据
 
 >db.posts.remove({"title":"其实创造比大志好玩"})
 ```
+
