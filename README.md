@@ -1,23 +1,22 @@
 # 引言
-MongoDB笔记。教程源于小马技术：
+MongoDB笔记。教程源于小马技术，适合入门：
 - 视频：https://www.youtube.com/watch?v=kmOzFqxcjEA&list=PLliocbKHJNwvYvA3paPKUg86qLKrwuNsd
 - 仓库：https://gitee.com/komavideo/LearnMongoDB
 
 
-该文章用于mongodb学习笔记整理。
 
-
-# 思维导图
-
+---
+**该文章用于mongodb学习笔记整理**
 ![gc6RNd.png](https://z3.ax1x.com/2021/05/16/gc6RNd.png)
-
 - 完整脑图：https://share.mubu.com/doc/7jeYw7aHAG
-- 仓库：https://github.com/sanhuamao1/LEARN-MONGODB（在原来的基础上小改并添加了一些注释）
+- 个人仓库：https://github.com/sanhuamao1/LEARN-MONGODB（在原来的基础上小改）
+- mongo shell 方法文档：https://docs.mongodb.com/manual/reference/method/
+- nodejs驱动方法文档：https://docs.mongodb.com/drivers/node/current/usage-examples/
 
-下面内容结合了官方文档与菜鸟教程的内容：
+
+下面内容在原来的基础上进行了补充：
 
 # 一 什么是MongoDB
-
 MongoDB是一个**面向文档**（NoSql）的免费数据库，多用于数据采集和分散处理（Map/Reduce），特别是在大数据处理方面比较擅长。
 
 - 数据库（Database）
@@ -54,7 +53,9 @@ db.[collection_name1].drop()	//删除集合
 **操作文档(Document)**
 
 ```bash
-db.[collection_name].insert({}) //插入数据
+db.[collection_name].insert({}) //插入数据（正在淘汰）
+db.[collection_name].insertOne({}) //插入单条数据
+db.[collection_name].insertMany({}) //插入多条数据
 db.[collection_name].find() 	//切换集合并查看文档
 db.[collection_name].count() 	//查看文档数
 db.[collection_name].remove({}) //删除文档
@@ -108,6 +109,7 @@ db.col.find({<key>:{$type:<type>}})	//根据数据类型查询
 
 ```bash
 db.col.find({}, {<key1>: true, <key2>: 1,<key3>:0}) //每条文档只选key1和key2显示,且不显示key3
+db.col.findOne(<query>)//只取第一条
 
 > db.posts.find({}, {title:true, rank:1});
 > db.posts.find({}, {title:true, rank:1, _id:0});
@@ -284,7 +286,6 @@ show users //展示角色
 db.dropUser(<user_name>)//删除角色
 updateUser(<user_name>,{pwd:<pwd>})//更改密码
 ```
-
 
 
 # 八 备份与恢复
