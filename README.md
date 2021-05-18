@@ -9,12 +9,9 @@ MongoDB笔记。教程源于小马技术，适合入门：
 **该文章用于mongodb学习笔记整理**
 ![gc6RNd.png](https://z3.ax1x.com/2021/05/16/gc6RNd.png)
 - 完整脑图：https://share.mubu.com/doc/7jeYw7aHAG
-- 个人仓库：https://github.com/sanhuamao1/LEARN-MONGODB（在原来的基础上小改）
+- 个人仓库：https://github.com/sanhuamao1/LEARN-MONGODB
 - mongo shell 方法文档：https://docs.mongodb.com/manual/reference/method/
 - nodejs驱动方法文档：https://docs.mongodb.com/drivers/node/current/usage-examples/
-
-
-下面内容在原来的基础上进行了补充：
 
 # 一 什么是MongoDB
 MongoDB是一个**面向文档**（NoSql）的免费数据库，多用于数据采集和分散处理（Map/Reduce），特别是在大数据处理方面比较擅长。
@@ -22,6 +19,10 @@ MongoDB是一个**面向文档**（NoSql）的免费数据库，多用于数据�
 - 数据库（Database）
 - 集合（Collection）——相当于数据表（Table）
 - 文档（Document）——相当于记录（Record）
+---
+- 官方网站：https://www.mongodb.com/
+- 数据库引擎排名：https://db-engines.com/en/ranking
+- 学习前准备：JavaScript基础
 
 # 二 MongoDB安装
 
@@ -196,12 +197,14 @@ db.col.aggregate([{$group : {_id : <groupby-key>,<new-key> : {$last:<key>}}}])//
 
 - 官方文档：https://docs.mongodb.com/manual/reference/method/db.collection.update/
 
-- 语法：update(`<query>,<update>,<options>`)
+- `update(<query>,<update>,<options>)`
+- `remove(<query>)`：根据条件删除
 
 
 ```bash
 > db.posts.update({"title":"怪物猎人世界评测"}, {$set: {"rank": 10} });
 > db.posts.update({"tag":"it"}, {$set: {"rank": 60}}, {multi: true});
+> db.posts.remove({"title":"其实创造比大志好玩"})
 ```
 
 ## update
@@ -225,7 +228,6 @@ db.col.aggregate([{$group : {_id : <groupby-key>,<new-key> : {$last:<key>}}}])//
 ```bash
 > db.posts.update({title:"其实创造比大志好玩"}, {title:"其实创造比大志好玩", "rank":5,"tag":"game"}, {upsert:true});
 > db.posts.update({title:"怪物猎人世界评测"}, {$unset: {"istop": true}});
-
 ```
 
 # 六 使用索引
@@ -297,8 +299,5 @@ updateUser(<user_name>,{pwd:<pwd>})//更改密码
 
 ```bash
 db.col.distinct(<key>)	//取指定字段所包含的属性值(数组)
-db.col.remove(<query>);//根据条件删除数据
-
->db.posts.remove({"title":"其实创造比大志好玩"})
 ```
 
