@@ -111,6 +111,7 @@ db.col.find({<key>:{$type:<type>}})	//根据数据类型查询
 ```bash
 db.col.find({}, {<key1>: true, <key2>: 1,<key3>:0}) //每条文档只选key1和key2显示,且不显示key3
 db.col.findOne(<query>)//只取第一条
+db.col.distinct(<key>)	//取指定字段所包含的属性值(数组)
 
 > db.posts.find({}, {title:true, rank:1});
 > db.posts.find({}, {title:true, rank:1, _id:0});
@@ -294,10 +295,4 @@ updateUser(<user_name>,{pwd:<pwd>})//更改密码
 
 - mongodump：备份
 - mongorestore：恢复
-
-# 其他
-
-```bash
-db.col.distinct(<key>)	//取指定字段所包含的属性值(数组)
-```
 
