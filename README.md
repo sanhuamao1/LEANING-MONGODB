@@ -3,13 +3,11 @@ MongoDB笔记。教程源于小马技术，适合入门：
 - 视频：https://www.youtube.com/watch?v=kmOzFqxcjEA&list=PLliocbKHJNwvYvA3paPKUg86qLKrwuNsd
 - 仓库：https://gitee.com/komavideo/LearnMongoDB
 
-
-
 ---
 **该文章用于mongodb学习笔记整理**
-![gc6RNd.png](https://z3.ax1x.com/2021/05/16/gc6RNd.png)
+![gc6RNd.png](https://z3.ax1x.com/2021/05/16/gc6RNd.png)]
 - 完整脑图：https://share.mubu.com/doc/7jeYw7aHAG
-- 个人仓库：https://github.com/sanhuamao1/LEARN-MONGODB
+- 个人仓库：https://github.com/sanhuamao1/LEARN-MONGODB（包含一些操作例子）
 - mongo shell 方法文档：https://docs.mongodb.com/manual/reference/method/
 - nodejs驱动方法文档：https://docs.mongodb.com/drivers/node/current/usage-examples/
 
@@ -35,7 +33,7 @@ MongoDB是一个**面向文档**（NoSql）的免费数据库，多用于数据�
 mongo	//进入mongo命令工具
 help	//查看可执行命令
 show dbs	//展示数据库
-use [database_name]	//创建或切换数据库
+use [db_name]	//创建或切换数据库
 db.stats()	//查看数据库状态
 db.dropDatabase()	//删除数据库
 exit	//退出mongo命令工具
@@ -44,22 +42,22 @@ exit	//退出mongo命令工具
 **操作集合(Collections)**
 
 ```bash
-db.createCollection("[collection_name]")	//创建集合
+db.createCollection(<col_name>)	//创建集合
 show collections	//展示集合
-db.[collection_name].find()	//切换集合并查看文档
-db.[collection_name1].renameCollection("[collection_name2]")	//集合重命名
-db.[collection_name1].drop()	//删除集合
+db.[col_name].find()	//切换集合并查看文档
+db.[col_name1].renameCollection(<col_name2>)	//集合重命名
+db.[col_name].drop()	//删除集合
 ```
 
 **操作文档(Document)**
 
 ```bash
-db.[collection_name].insert({}) //插入数据（正在淘汰）
-db.[collection_name].insertOne({}) //插入单条数据
-db.[collection_name].insertMany({}) //插入多条数据
-db.[collection_name].find() 	//切换集合并查看文档
-db.[collection_name].count() 	//查看文档数
-db.[collection_name].remove({}) //删除文档
+db.[col_name].insert({}) //插入数据（正在淘汰）
+db.[col_name].insertOne({}) //插入单条数据
+db.[col_name].insertMany({}) //插入多条数据
+db.[col_name].find() 	//切换集合并查看文档
+db.[col_name].count() 	//查看文档数
+db.[col_name].remove({}) //删除文档
 
 > db.posts.insert({title:"怪物猎人世界评测","rank":2,"tag":"game"});
 ```
@@ -287,7 +285,7 @@ db.auth("admin","123456")
 ```bash
 show users //展示角色
 db.dropUser(<user_name>)//删除角色
-updateUser(<user_name>,{pwd:<pwd>})//更改密码
+db.updateUser(<user_name>,{pwd:<pwd>})//更改密码
 ```
 
 
