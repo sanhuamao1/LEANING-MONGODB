@@ -5,7 +5,7 @@ MongoDB笔记。教程源于小马技术，适合入门：
 
 ---
 **该文章用于mongodb学习笔记整理**
-![gc6RNd.png](https://z3.ax1x.com/2021/05/16/gc6RNd.png)]
+![gW4Itx.png](https://z3.ax1x.com/2021/05/18/gW4Itx.png)]
 - 完整脑图：https://share.mubu.com/doc/7jeYw7aHAG
 - 个人仓库：https://github.com/sanhuamao1/LEARN-MONGODB（包含一些操作例子）
 - mongo shell 方法文档：https://docs.mongodb.com/manual/reference/method/
